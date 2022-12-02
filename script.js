@@ -1,0 +1,1 @@
+const displayStatus = document.querySelector('.game--status')
