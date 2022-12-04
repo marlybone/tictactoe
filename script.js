@@ -1,21 +1,25 @@
 const displayStatus = document.querySelector('.game--status') 
 const displayWinCounter = document.querySelector('.game--score')
+const displayClock = document.querySelector('.game--clock')
 
 var gameActive = true;
 
 var currentPlayer = "X";
 var xWin = 0;
 var oWin = 0;
+var seconds = 30;
 
 var gameState = ["","","","","","","","",""];
 
 const winningMessage = () => `Player ${currentPlayer} has Won!`;
 const drawMessage = () => `Game ended in a draw!`;
 const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
-const winCounter = () => `Player X won ${xWin} times and Player O won ${oWin} times`
+const winCounter = () => `Player X won ${xWin} times and Player O won ${oWin} times`;
+const timer = () => `Timer: ${seconds}`;
 
 displayStatus.innerHTML = currentPlayerTurn();
 displayWinCounter.innerHTML = winCounter();
+displayClock.innerHTML = timer();
 
 const winningConditions = [
     [0, 1, 2],
@@ -27,6 +31,13 @@ const winningConditions = [
     [0, 4, 8],
     [2, 4, 6]
 ];
+
+function setTimer() {
+  const secondTimer = setInterval(() => {
+    seconds--;
+    displayClock.innerHTML = timer();
+  }, 1000)
+}
 
 function handleCellPlayed(clickedCell, clickedCellIndex) {
 gameState[clickedCellIndex] = currentPlayer;
@@ -75,7 +86,7 @@ function handleResults() {
         return;
     }
 
-    handlePlayerChange(); 
+    handlePlayerChange();
 }
 
 function handleCellClick(clickedCellEvent) {
